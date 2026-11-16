@@ -8,7 +8,7 @@ st.set_page_config(
     page_title="REDDY ANNA | Live Cricket Exchange",
     page_icon="🏏",
     layout="centered",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
 # Initialize Session State
@@ -26,8 +26,10 @@ if "bets_history" not in st.session_state:
     st.session_state.bets_history = []
 if "show_auth" not in st.session_state:
     st.session_state.show_auth = None
+if "menu_open" not in st.session_state:
+    st.session_state.menu_open = False
 
-# Custom CSS Matching Exact Screenshot Layout, Typography & Styling
+# Custom CSS Matching Screenshot Layout & Typography
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
@@ -120,7 +122,7 @@ html, body, [class*="css"] {
     margin-bottom: 12px;
 }
 
-/* Floating WhatsApp Pill - Properly positioned to avoid overlap */
+/* Floating WhatsApp Pill */
 .whatsapp-float {
     position: fixed;
     bottom: 20px;
@@ -147,50 +149,47 @@ div.stButton > button {
 </style>
 """, unsafe_allow_html=True)
 
-# ----------------- SIDEBAR NAVIGATION DRAWER -----------------
-with st.sidebar:
-    st.markdown("### 📋 Navigation Menu")
-    if st.button("🏠 Home", key="nav_home", use_container_width=True):
-        st.session_state.active_section = "Home"
+# ----------------- TOP NAVBAR HEADER WITH WORKING MENU BUTTON -----------------
+col_menu, col_logo, col_vip = st.columns([1, 2, 1])
+
+with col_menu:
+    if st.button("☰ Menu", key="menu_toggle_btn", use_container_width=True):
+        st.session_state.menu_open = not st.session_state.menu_open
         st.rerun()
-    
-    with st.expander("🏏 Reddy Anna Sports"):
-        if st.button("Live Cricket Exchange", key="nav_cricket", use_container_width=True):
-            st.session_state.active_section = "Home"
-            st.rerun()
-        if st.button("Virtual Football", key="nav_football", use_container_width=True):
-            st.session_state.active_section = "Football"
-            st.rerun()
 
-    with st.expander("🔑 ID Providers"):
-        st.markdown("- Master Agent Hub\n- 24/7 WhatsApp Support\n- Instant Settlement Desk")
-
-    if st.button("🆔 Reddy Anna ID", key="nav_id_info", use_container_width=True):
-        st.info("Reddy Anna is India's premier online sports exchange platform active since 2010.")
-
-    if st.button("ℹ️ About Us", key="nav_about", use_container_width=True):
-        st.success("Providing secure access, live odds, and round-the-clock customer assistance.")
-
-    st.divider()
-    if st.session_state.logged_in:
-        st.write(f"Account: **{st.session_state.username}**")
-        st.write(f"Wallet Balance: **₹{st.session_state.balance:,.2f}**")
-        if st.button("Logout", key="nav_logout", use_container_width=True):
-            st.session_state.logged_in = False
-            st.rerun()
-
-# ----------------- TOP NAVBAR HEADER -----------------
-st.markdown("""
-<div class="top-navbar">
-    <div style="color:#e5c158; font-size:18px; font-weight:bold;">☰ Menu</div>
-    <div class="brand-logo">
+with col_logo:
+    st.markdown("""
+    <div class="brand-logo" style="text-align:center; margin-top:-4px;">
         <div class="brand-main">REDDY</div>
         <div class="brand-sub-overlay">ANNA</div>
         <div class="brand-since">— SINCE 2010 —</div>
     </div>
-    <div style="font-size:11px; color:#facc15; font-weight:600;">VIP</div>
-</div>
-""", unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
+
+with col_vip:
+    st.markdown("<div style='text-align:right; font-size:12px; color:#facc15; font-weight:700; padding-top:8px;'>VIP</div>", unsafe_allow_html=True)
+
+# ----------------- WORKING POPUP NAVIGATION MENU -----------------
+if st.session_state.menu_open:
+    with st.container(border=True):
+        st.markdown("### 📋 Navigation Menu")
+        if st.button("🏠 Home / Live Matches", key="m_home", use_container_width=True):
+            st.session_state.active_section = "Home"
+            st.session_state.menu_open = False
+            st.rerun()
+        if st.button("🏏 Reddy Anna Sports", key="m_sports", use_container_width=True):
+            st.session_state.active_section = "Home"
+            st.session_state.menu_open = False
+            st.rerun()
+        if st.button("🆔 Reddy Anna ID Info", key="m_id", use_container_width=True):
+            st.info("Reddy Anna is India's premier online sports exchange platform active since 2010.")
+        if st.button("ℹ️ About Us", key="m_about", use_container_width=True):
+            st.success("Providing secure access, live odds, and round-the-clock customer assistance.")
+        if st.button("❌ Close Menu", key="m_close", use_container_width=True):
+            st.session_state.menu_open = False
+            st.rerun()
+
+st.divider()
 
 # Auth Header Buttons
 if not st.session_state.logged_in:
