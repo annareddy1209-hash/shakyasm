@@ -27,7 +27,7 @@ if "bets_history" not in st.session_state:
 if "show_auth" not in st.session_state:
     st.session_state.show_auth = None
 
-# Custom CSS Matching Screenshot Layout & Typography
+# Custom CSS Matching Exact Screenshot Layout, Typography & Styling
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
@@ -41,7 +41,7 @@ html, body, [class*="css"] {
 #MainMenu, footer, header {visibility: hidden;}
 .block-container {
     padding-top: 0rem !important;
-    padding-bottom: 6rem !important;
+    padding-bottom: 7rem !important;
     padding-left: 0.75rem !important;
     padding-right: 0.75rem !important;
     max-width: 480px !important;
@@ -120,17 +120,17 @@ html, body, [class*="css"] {
     margin-bottom: 12px;
 }
 
-/* Floating WhatsApp Pill */
+/* Floating WhatsApp Pill - Properly positioned to avoid overlap */
 .whatsapp-float {
     position: fixed;
-    bottom: 18px;
+    bottom: 20px;
     right: 16px;
     background-color: #25d366;
     color: #ffffff !important;
-    padding: 12px 22px;
+    padding: 10px 18px;
     border-radius: 50px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 13px;
     text-decoration: none;
     box-shadow: 0 6px 18px rgba(37, 211, 102, 0.45);
     z-index: 9999;
@@ -182,7 +182,7 @@ with st.sidebar:
 # ----------------- TOP NAVBAR HEADER -----------------
 st.markdown("""
 <div class="top-navbar">
-    <div style="color:white; font-size:22px; font-weight:bold;">☰</div>
+    <div style="color:#e5c158; font-size:18px; font-weight:bold;">☰ Menu</div>
     <div class="brand-logo">
         <div class="brand-main">REDDY</div>
         <div class="brand-sub-overlay">ANNA</div>
@@ -335,7 +335,7 @@ if st.session_state.selected_bet:
 # ----------------- FLOATING WHATSAPP BUTTON -----------------
 st.markdown("""
 <a href="https://wa.me/1234567890" target="_blank" class="whatsapp-float">
-    <span style="font-size:20px;">💬</span>
-    <span>Get The Reddy Anna ID Now</span>
+    <span style="font-size:18px;">💬</span>
+    <span>Get ID Now</span>
 </a>
 """, unsafe_allow_html=True)
