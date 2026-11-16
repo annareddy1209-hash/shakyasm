@@ -27,7 +27,7 @@ if "bets_history" not in st.session_state:
 if "show_auth" not in st.session_state:
     st.session_state.show_auth = None
 
-# Custom CSS Matching Exact Screenshot Layout, Typography & Styling
+# Custom CSS Matching Screenshot Layout & Typography
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
@@ -89,7 +89,7 @@ html, body, [class*="css"] {
     letter-spacing: 1.5px;
 }
 
-/* Live Match Feed Cards matching screenshot */
+/* Live Match Cards */
 .match-card {
     background: #ffffff;
     border-radius: 12px;
@@ -120,7 +120,7 @@ html, body, [class*="css"] {
     margin-bottom: 12px;
 }
 
-/* Floating Green WhatsApp Pill */
+/* Floating WhatsApp Pill */
 .whatsapp-float {
     position: fixed;
     bottom: 18px;
@@ -147,35 +147,35 @@ div.stButton > button {
 </style>
 """, unsafe_allow_html=True)
 
-# ----------------- SIDEBAR HAMBURGER NAVIGATION DRAWER -----------------
+# ----------------- SIDEBAR NAVIGATION DRAWER -----------------
 with st.sidebar:
     st.markdown("### 📋 Navigation Menu")
-    if st.button("🏠 Home", use_container_width=True):
+    if st.button("🏠 Home", key="nav_home", use_container_width=True):
         st.session_state.active_section = "Home"
         st.rerun()
     
     with st.expander("🏏 Reddy Anna Sports"):
-        if st.button("Live Cricket Exchange", use_container_width=True):
+        if st.button("Live Cricket Exchange", key="nav_cricket", use_container_width=True):
             st.session_state.active_section = "Home"
             st.rerun()
-        if st.button("Virtual Football", use_container_width=True):
+        if st.button("Virtual Football", key="nav_football", use_container_width=True):
             st.session_state.active_section = "Football"
             st.rerun()
 
     with st.expander("🔑 ID Providers"):
         st.markdown("- Master Agent Hub\n- 24/7 WhatsApp Support\n- Instant Settlement Desk")
 
-    if st.button("🆔 Reddy Anna ID", use_container_width=True):
+    if st.button("🆔 Reddy Anna ID", key="nav_id_info", use_container_width=True):
         st.info("Reddy Anna is India's premier online sports exchange platform active since 2010.")
 
-    if st.button("ℹ️ About Us", use_container_width=True):
+    if st.button("ℹ️ About Us", key="nav_about", use_container_width=True):
         st.success("Providing secure access, live odds, and round-the-clock customer assistance.")
 
     st.divider()
     if st.session_state.logged_in:
         st.write(f"Account: **{st.session_state.username}**")
         st.write(f"Wallet Balance: **₹{st.session_state.balance:,.2f}**")
-        if st.button("Logout", use_container_width=True):
+        if st.button("Logout", key="nav_logout", use_container_width=True):
             st.session_state.logged_in = False
             st.rerun()
 
@@ -192,21 +192,21 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Auth Header Buttons (Login & Register matching reference)
+# Auth Header Buttons
 if not st.session_state.logged_in:
     c1, c2 = st.columns(2)
     with c1:
-        if st.button("Login", type="primary", use_container_width=True):
+        if st.button("Login", key="top_login_btn", type="primary", use_container_width=True):
             st.session_state.show_auth = "Login"
     with c2:
-        if st.button("Register", type="primary", use_container_width=True):
+        if st.button("Register", key="top_reg_btn", type="primary", use_container_width=True):
             st.session_state.show_auth = "Register"
 else:
     c1, c2 = st.columns([1.2, 1])
     with c1:
         st.markdown(f"<div style='background:#111827; color:#facc15; padding:6px; border-radius:8px; text-align:center; font-size:12px; font-weight:bold;'>💰 ₹{st.session_state.balance:,.2f}</div>", unsafe_allow_html=True)
     with c2:
-        if st.button("📜 My Bets", use_container_width=True):
+        if st.button("📜 My Bets", key="top_history_btn", use_container_width=True):
             st.session_state.active_section = "History"
             st.rerun()
 
@@ -214,11 +214,11 @@ else:
 if st.session_state.show_auth and not st.session_state.logged_in:
     with st.container(border=True):
         st.subheader(f"{st.session_state.show_auth} to Reddy Anna ID")
-        u = st.text_input("Username", placeholder="e.g. ReddyChamp")
-        p = st.text_input("Password", type="password", placeholder="••••••")
+        u = st.text_input("Username", key="auth_username_input", placeholder="e.g. ReddyChamp")
+        p = st.text_input("Password", type="password", key="auth_pass_input", placeholder="••••••")
         ca, cb = st.columns(2)
         with ca:
-            if st.button(f"Confirm {st.session_state.show_auth}", type="primary", use_container_width=True):
+            if st.button(f"Confirm {st.session_state.show_auth}", key="auth_confirm_btn", type="primary", use_container_width=True):
                 if u.strip():
                     st.session_state.logged_in = True
                     st.session_state.username = u.strip()
@@ -227,11 +227,11 @@ if st.session_state.show_auth and not st.session_state.logged_in:
                 else:
                     st.error("Please enter a username.")
         with cb:
-            if st.button("Cancel", use_container_width=True):
+            if st.button("Cancel", key="auth_cancel_btn", use_container_width=True):
                 st.session_state.show_auth = None
                 st.rerun()
 
-# ----------------- LIVE CRICKET MATCHES (MATCHING SCREENSHOT) -----------------
+# ----------------- LIVE CRICKET MATCHES -----------------
 LIVE_CRICKET_MATCHES = [
     {
         "match": "R C Bengaluru v Kolkata Knight Riders",
@@ -268,17 +268,16 @@ if st.session_state.active_section == "Home":
         </div>
         """, unsafe_allow_html=True)
         
-        # Red "make Bet" action buttons matching screenshot
         bc1, bc2 = st.columns(2)
         with bc1:
-            if st.button(f"🔴 make Bet ({m['t1']} @ {m['t1_odds']})", key=f"bet_{idx}_t1", use_container_width=True):
+            if st.button(f"🔴 make Bet ({m['t1']} @ {m['t1_odds']})", key=f"match_{idx}_t1_btn", use_container_width=True):
                 st.session_state.selected_bet = {"match": m["match"], "pick": m["t1"], "type": "BACK", "odds": m["t1_odds"]}
         with bc2:
-            if st.button(f"🔴 make Bet ({m['t2']} @ {m['t2_odds']})", key=f"bet_{idx}_t2", use_container_width=True):
+            if st.button(f"🔴 make Bet ({m['t2']} @ {m['t2_odds']})", key=f"match_{idx}_t2_btn", use_container_width=True):
                 st.session_state.selected_bet = {"match": m["match"], "pick": m["t2"], "type": "BACK", "odds": m["t2_odds"]}
 
 elif st.session_state.active_section == "History":
-    if st.button("← Back to Live Matches"):
+    if st.button("← Back to Live Matches", key="back_to_live_btn"):
         st.session_state.active_section = "Home"
         st.rerun()
     st.subheader(f"📜 {st.session_state.username}'s Bet History")
@@ -296,13 +295,13 @@ if st.session_state.selected_bet:
     with st.container(border=True):
         st.markdown(f"### 🎟️ Active Bet Slip")
         st.write(f"**{bet['match']}**\n\nSelection: **{bet['pick']}** @ **{bet['odds']}**")
-        stake_amt = st.number_input("Enter Stake (₹)", min_value=100, max_value=10000, value=500, step=100)
+        stake_amt = st.number_input("Enter Stake (₹)", min_value=100, max_value=10000, value=500, step=100, key="active_stake_input")
         payout = round(stake_amt * bet['odds'], 2)
         st.caption(f"Estimated Returns: **₹{payout:,.2f}**")
         
         sc1, sc2 = st.columns(2)
         with sc1:
-            if st.button("Confirm Bet", type="primary", use_container_width=True):
+            if st.button("Confirm Bet", key="confirm_active_bet_btn", type="primary", use_container_width=True):
                 if not st.session_state.logged_in:
                     st.warning("Please Login or Register first!")
                 elif stake_amt > st.session_state.balance:
@@ -329,11 +328,11 @@ if st.session_state.selected_bet:
                     time.sleep(1)
                     st.rerun()
         with sc2:
-            if st.button("Cancel", use_container_width=True):
+            if st.button("Cancel", key="cancel_active_bet_btn", use_container_width=True):
                 st.session_state.selected_bet = None
                 st.rerun()
 
-# ----------------- FLOATING GREEN WHATSAPP BUTTON -----------------
+# ----------------- FLOATING WHATSAPP BUTTON -----------------
 st.markdown("""
 <a href="https://wa.me/1234567890" target="_blank" class="whatsapp-float">
     <span style="font-size:20px;">💬</span>
