@@ -57,8 +57,8 @@ if "nav" in params:
         st.session_state.auth_mode = None
     st.rerun()
 
-# Exact CSS Styling Matching Your Layout
-st.markdown("""
+# Exact CSS Styling injected globally
+st.html("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
@@ -353,7 +353,7 @@ html, body, [class*="css"] {
     gap: 10px;
 }
 </style>
-""", unsafe_allow_html=True)
+""")
 
 # ----------------- TOP HEADER BAR -----------------
 menu_symbol = "✕" if st.session_state.menu_open else "☰"
@@ -373,7 +373,7 @@ else:
     </div>
     """
 
-st.markdown(f"""
+st.html(f"""
 <div class="top-header">
     <div class="header-left">
         <a href="?nav=toggle_menu" target="_self" class="menu-icon-btn">{menu_symbol}</a>
@@ -385,7 +385,7 @@ st.markdown(f"""
     </div>
     {right_controls}
 </div>
-""", unsafe_allow_html=True)
+""")
 
 # ----------------- DROPDOWN MENU DRAWER -----------------
 if st.session_state.menu_open:
@@ -414,7 +414,7 @@ if st.session_state.menu_open:
         </div>
         """
 
-    st.markdown(f"""
+    st.html(f"""
     <div class="nav-drawer">
         <a href="?nav=Home" target="_self" class="nav-item nav-item-active">Home</a>
         <a href="?nav=sub_sports" target="_self" class="nav-item">Reddy Anna Sports &nbsp;▾</a>
@@ -424,7 +424,7 @@ if st.session_state.menu_open:
         <a href="?nav=ReddyAnnaID" target="_self" class="nav-item">Reddy Anna ID</a>
         <a href="?nav=AboutUs" target="_self" class="nav-item">About Us</a>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
 # ----------------- AUTHENTICATION MODAL -----------------
 if st.session_state.auth_mode and not st.session_state.logged_in:
@@ -473,7 +473,7 @@ if st.session_state.view == "Home":
         </div>
         """
 
-    st.markdown(f"""
+    st.html(f"""
     <div class="main-body">
         {grid_html}
 
@@ -534,7 +534,7 @@ if st.session_state.view == "Home":
             </a>
         </div>
     </div>
-    """, unsafe_allow_html=True)
+    """)
 
 # ----------------- LIVE MARKETS VIEW -----------------
 elif st.session_state.view in ["Cricket", "Football", "Tennis", "Horse Racing", "E - Cricket", "Sportsbook"]:
@@ -706,11 +706,11 @@ if st.session_state.selected_bet:
                 st.rerun()
 
 # ----------------- FLOATING WHATSAPP PILL -----------------
-st.markdown("""
-<a href="https://wa.me/1234567890" target="_blank" class="whatsapp-pill" style="position: fixed; bottom: 18px; right: 16px; background-color: #25d366; color: #ffffff !important; padding: 11px 20px; border-radius: 50px; font-size: 14px; font-weight: 600; text-decoration: none !important; box-shadow: 0 6px 16px rgba(37, 211, 102, 0.45); z-index: 1001; display: flex; align-items: center; gap: 10px;">
+st.html("""
+<a href="https://wa.me/1234567890" target="_blank" class="whatsapp-pill">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
         <path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.77-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.86s.274.072.376-.043c.101-.116.433-.506.549-.68.116-.173.231-.145.39-.087s1.011.477 1.184.564.289.13.332.202c.045.072.045.419-.1.824z"/>
     </svg>
     <span>Get The Reddy Anna ID Now</span>
 </a>
-""", unsafe_allow_html=True)
+""")
