@@ -23,7 +23,7 @@ if "view" not in st.session_state:
 if "menu_open" not in st.session_state:
     st.session_state.menu_open = False
 if "menu_sub" not in st.session_state:
-    st.session_state.menu_sub = None  # "sports" or "providers"
+    st.session_state.menu_sub = None
 if "auth_mode" not in st.session_state:
     st.session_state.auth_mode = None
 if "selected_bet" not in st.session_state:
@@ -31,7 +31,7 @@ if "selected_bet" not in st.session_state:
 if "bets_history" not in st.session_state:
     st.session_state.bets_history = []
 
-# Handle URL Query Parameters for Instant Clicks Without Page Clutter
+# Handle URL Query Parameters for Instant Navigation
 params = st.query_params
 if "nav" in params:
     target = params["nav"]
@@ -57,7 +57,7 @@ if "nav" in params:
         st.session_state.auth_mode = None
     st.rerun()
 
-# Exact CSS Matching Both Screenshots
+# Exact CSS Styling Matching Your Layout
 st.markdown("""
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
@@ -70,7 +70,6 @@ html, body, [class*="css"] {
     background-color: #f4f5f7 !important;
 }
 
-/* Hide Streamlit Default Chrome */
 #MainMenu, footer, header {visibility: hidden;}
 .block-container {
     padding-top: 0rem !important;
@@ -159,7 +158,7 @@ html, body, [class*="css"] {
     border: 1px solid #374151;
 }
 
-/* Exact Full-Width Dropdown Menu Drawer (Screenshot 1) */
+/* Dropdown Menu Drawer */
 .nav-drawer {
     background-color: #ffffff;
     margin: 0 -0.85rem 16px -0.85rem;
@@ -195,12 +194,11 @@ html, body, [class*="css"] {
     border-bottom: 1px solid #f3f4f6;
 }
 
-/* Main Content Wrapper */
 .main-body {
     padding-top: 18px;
 }
 
-/* 2x2 Sports Grid (Screenshot 2) */
+/* 2x2 Sports Grid */
 .sports-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -247,7 +245,7 @@ html, body, [class*="css"] {
 .card-tennis { background: linear-gradient(105deg, #990808 0%, #bf3b3b 55%, #e6c1c1 100%); }
 .card-horse { background: linear-gradient(105deg, #cf7715 0%, #e39639 55%, #f5dbb8 100%); }
 
-/* 4 Full-Width Feature Banners (Screenshots 1 & 2) */
+/* 4 Full-Width Feature Banners */
 .banner-list {
     display: flex;
     flex-direction: column;
@@ -336,7 +334,7 @@ html, body, [class*="css"] {
 .banner-aviator { background: linear-gradient(95deg, #eb0c1e 0%, #bd0817 60%, #75040d 100%); }
 .banner-sportsbook { background: linear-gradient(95deg, #172b57 0%, #305296 55%, #c8d7f7 100%); }
 
-/* Floating Green WhatsApp Pill */
+/* Floating WhatsApp Pill */
 .whatsapp-pill {
     position: fixed;
     bottom: 18px;
@@ -357,7 +355,7 @@ html, body, [class*="css"] {
 </style>
 """, unsafe_allow_html=True)
 
-# ----------------- TOP BLACK HEADER BAR (☰ / ✕ + LOGO + LOGIN/REGISTER) -----------------
+# ----------------- TOP HEADER BAR -----------------
 menu_symbol = "✕" if st.session_state.menu_open else "☰"
 
 if not st.session_state.logged_in:
@@ -389,7 +387,7 @@ st.markdown(f"""
 </div>
 """, unsafe_allow_html=True)
 
-# ----------------- EXACT DROPDOWN MENU DRAWER (SCREENSHOT 1) -----------------
+# ----------------- DROPDOWN MENU DRAWER -----------------
 if st.session_state.menu_open:
     sports_sub_html = ""
     if st.session_state.menu_sub == "sports":
@@ -428,7 +426,7 @@ if st.session_state.menu_open:
     </div>
     """, unsafe_allow_html=True)
 
-# ----------------- LOGIN / REGISTER POPUP -----------------
+# ----------------- AUTHENTICATION MODAL -----------------
 if st.session_state.auth_mode and not st.session_state.logged_in:
     st.write("")
     with st.container(border=True):
@@ -450,9 +448,8 @@ if st.session_state.auth_mode and not st.session_state.logged_in:
                 st.session_state.auth_mode = None
                 st.rerun()
 
-# ----------------- HOME LOBBY (EXACT SCREENSHOT 1 & 2 REPLICA) -----------------
+# ----------------- HOME VIEW (USING EXACT HTML CODE YOU PROVIDED) -----------------
 if st.session_state.view == "Home":
-    # Hide the 2x2 grid when menu is open so it matches Screenshot 1, show it when closed like Screenshot 2
     grid_html = ""
     if not st.session_state.menu_open:
         grid_html = """
@@ -539,7 +536,7 @@ if st.session_state.view == "Home":
     </div>
     """, unsafe_allow_html=True)
 
-# ----------------- LIVE MARKETS FOR ALL SPORTS -----------------
+# ----------------- LIVE MARKETS VIEW -----------------
 elif st.session_state.view in ["Cricket", "Football", "Tennis", "Horse Racing", "E - Cricket", "Sportsbook"]:
     sport = st.session_state.view
     st.write("")
@@ -587,7 +584,7 @@ elif st.session_state.view in ["Cricket", "Football", "Tennis", "Horse Racing", 
             if b2.button(f"🔴 make Bet ({t2} @ {o2})", key=f"bet_{sport}_{idx}_2", use_container_width=True):
                 st.session_state.selected_bet = {"match": m_name, "pick": t2, "odds": o2}
 
-# ----------------- AVIATOR GAME -----------------
+# ----------------- AVIATOR CRASH GAME -----------------
 elif st.session_state.view == "Aviator":
     st.write("")
     if st.button("← Back to Lobby"):
@@ -617,7 +614,7 @@ elif st.session_state.view == "Aviator":
                 "match": "Aviator 3D", "pick": f"Cashout @ {mult}x", "odds": mult, "stake": stake, "status": status
             })
 
-# ----------------- EVOLUTION LIVE CASINO -----------------
+# ----------------- EVOLUTION CASINO -----------------
 elif st.session_state.view == "Evolution":
     st.write("")
     if st.button("← Back to Lobby"):
@@ -645,7 +642,7 @@ elif st.session_state.view == "Evolution":
                 "match": table, "pick": "Main Hand", "odds": 1.95, "stake": stake, "status": status
             })
 
-# ----------------- INFO PAGES & BET HISTORY -----------------
+# ----------------- INFO & HISTORY PAGES -----------------
 elif st.session_state.view == "ReddyAnnaID":
     st.write("")
     if st.button("← Back"):
@@ -708,7 +705,7 @@ if st.session_state.selected_bet:
                 st.session_state.selected_bet = None
                 st.rerun()
 
-# ----------------- FLOATING GREEN WHATSAPP PILL -----------------
+# ----------------- FLOATING WHATSAPP PILL -----------------
 st.markdown("""
 <a href="https://wa.me/1234567890" target="_blank" class="whatsapp-pill">
     <svg width="22" height="22" viewBox="0 0 24 24" fill="white">
