@@ -448,7 +448,7 @@ if st.session_state.auth_mode and not st.session_state.logged_in:
                 st.session_state.auth_mode = None
                 st.rerun()
 
-# ----------------- HOME VIEW (USING EXACT HTML CODE YOU PROVIDED) -----------------
+# ----------------- HOME VIEW -----------------
 if st.session_state.view == "Home":
     grid_html = ""
     if not st.session_state.menu_open:
